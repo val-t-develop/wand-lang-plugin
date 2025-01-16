@@ -80,8 +80,6 @@
         DOUBLE_BIG_POST   = 'D'
         EXP_SMALL         = 'e'
         EXP_BIG           = 'E'
-        HEX_X_SMALL       = 'x'
-        HEX_X_BIG         = 'X'
 
         LBRACE            = '{'
         RBRACE            = '}'
@@ -115,7 +113,7 @@
         LSHIFT            = '<<'
         RSHIFT            = '>>'
         URSHIFT           = '>>>'
-        ASSING            = '='
+        ASSIGN            = '='
         ADD_ASSIGN        = '+='
         MINUS_ASSIGN      = '-='
         MUL_ASSIGN        = '*='
@@ -130,9 +128,9 @@
         INC               = '++'
         DEC               = '--'
 
-        space             = 'regexp:\s+'
-        line_comment      = 'regexp://.*'
-        block_comment     = 'regexp:/\*(.|\n)*\*/'
+        SPACE             = 'regexp:\s+'
+        LINE_COMMENT      = 'regexp://.*'
+        BLOCK_COMMENT     = 'regexp:/\*(.|\n)*\*/'
         IDENTIFIER        = 'regexp:[a-zA-Z_][a-zA-Z_0-9]*'
         STRING_LITERAL    = 'regexp:"([^"\\]*(\\.[^"\\]*)*)"'
         CHAR_LITERAL      = "regexp:'([^'\\]|\\.)'"

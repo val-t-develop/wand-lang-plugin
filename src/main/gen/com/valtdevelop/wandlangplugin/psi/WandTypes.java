@@ -167,7 +167,7 @@ public interface WandTypes {
   IElementType ADD = new WandTokenType("+");
   IElementType ADD_ASSIGN = new WandTokenType("+=");
   IElementType AND = new WandTokenType("&&");
-  IElementType ASSING = new WandTokenType("=");
+  IElementType ASSIGN = new WandTokenType("=");
   IElementType BIN_AND = new WandTokenType("&");
   IElementType BIN_AND_ASSIGN = new WandTokenType("&=");
   IElementType BIN_NOT = new WandTokenType("~");
@@ -175,7 +175,7 @@ public interface WandTypes {
   IElementType BIN_OR_ASSIGN = new WandTokenType("|=");
   IElementType BIN_XOR = new WandTokenType("^");
   IElementType BIN_XOR_ASSIGN = new WandTokenType("^=");
-  IElementType BLOCK_COMMENT = new WandTokenType("block_comment");
+  IElementType BLOCK_COMMENT = new WandTokenType("BLOCK_COMMENT");
   IElementType BOOL = new WandTokenType("bool");
   IElementType BREAK = new WandTokenType("break");
   IElementType BYTE = new WandTokenType("byte");
@@ -214,8 +214,6 @@ public interface WandTypes {
   IElementType GOTO = new WandTokenType("goto");
   IElementType GT = new WandTokenType(">");
   IElementType HEX_DIGITS = new WandTokenType("0[xX][0-9a-fA-F]+");
-  IElementType HEX_X_BIG = new WandTokenType("X");
-  IElementType HEX_X_SMALL = new WandTokenType("x");
   IElementType IDENTIFIER = new WandTokenType("IDENTIFIER");
   IElementType IF = new WandTokenType("if");
   IElementType IMPLEMENTS = new WandTokenType("implements");
@@ -227,7 +225,7 @@ public interface WandTypes {
   IElementType LBRACE = new WandTokenType("{");
   IElementType LBRACK = new WandTokenType("[");
   IElementType LE = new WandTokenType("<=");
-  IElementType LINE_COMMENT = new WandTokenType("line_comment");
+  IElementType LINE_COMMENT = new WandTokenType("LINE_COMMENT");
   IElementType LONG = new WandTokenType("long");
   IElementType LONG_BIG_POST = new WandTokenType("L");
   IElementType LONG_SMALL_POST = new WandTokenType("l");

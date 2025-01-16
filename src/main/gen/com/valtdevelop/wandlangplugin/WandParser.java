@@ -349,7 +349,7 @@ public class WandParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "assignment_operator")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_OPERATOR, "<assignment operator>");
-    r = consumeToken(b, ASSING);
+    r = consumeToken(b, ASSIGN);
     if (!r) r = consumeToken(b, MUL_ASSIGN);
     if (!r) r = consumeToken(b, DIV_ASSIGN);
     if (!r) r = consumeToken(b, MOD_ASSIGN);
@@ -3403,7 +3403,7 @@ public class WandParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b);
     r = variable_declarator_id(b, l + 1);
-    r = r && consumeToken(b, ASSING);
+    r = r && consumeToken(b, ASSIGN);
     r = r && variable_initializer(b, l + 1);
     exit_section_(b, m, null, r);
     return r;

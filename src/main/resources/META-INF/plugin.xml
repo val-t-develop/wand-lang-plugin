@@ -31,5 +31,10 @@
         <lang.parserDefinition
                 language="Wand"
                 implementationClass="com.valtdevelop.wandlangplugin.WandParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="Wand"
+                implementationClass="com.valtdevelop.wandlangplugin.WandSyntaxHighlighterFactory"/>
+        <colorSettingsPage
+                implementation="com.valtdevelop.wandlangplugin.WandColorSettingsPage"/>
     </extensions>
 </idea-plugin>

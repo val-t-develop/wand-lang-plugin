@@ -9,7 +9,7 @@ public interface WandTokenSets {
     TokenSet ADD = TokenSet.create(WandTypes.ADD);
     TokenSet ADD_ASSIGN = TokenSet.create(WandTypes.ADD_ASSIGN);
     TokenSet AND = TokenSet.create(WandTypes.AND);
-    TokenSet ASSING = TokenSet.create(WandTypes.ASSING);
+    TokenSet ASSING = TokenSet.create(WandTypes.ASSIGN);
     TokenSet BIN_AND = TokenSet.create(WandTypes.BIN_AND);
     TokenSet BIN_AND_ASSIGN = TokenSet.create(WandTypes.BIN_AND_ASSIGN);
     TokenSet BIN_NOT = TokenSet.create(WandTypes.BIN_NOT);
@@ -56,8 +56,6 @@ public interface WandTokenSets {
     TokenSet GOTO = TokenSet.create(WandTypes.GOTO);
     TokenSet GT = TokenSet.create(WandTypes.GT);
     TokenSet HEX_DIGITS = TokenSet.create(WandTypes.HEX_DIGITS);
-    TokenSet HEX_X_BIG = TokenSet.create(WandTypes.HEX_X_BIG);
-    TokenSet HEX_X_SMALL = TokenSet.create(WandTypes.HEX_X_SMALL);
     TokenSet IDENTIFIER = TokenSet.create(WandTypes.IDENTIFIER);
     TokenSet IF = TokenSet.create(WandTypes.IF);
     TokenSet IMPLEMENTS = TokenSet.create(WandTypes.IMPLEMENTS);

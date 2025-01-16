@@ -96,8 +96,6 @@ OCTAL_DIGITS=[0-7]+
   "D"                       { return DOUBLE_BIG_POST; }
   "e"                       { return EXP_SMALL; }
   "E"                       { return EXP_BIG; }
-  "x"                       { return HEX_X_SMALL; }
-  "X"                       { return HEX_X_BIG; }
   "{"                       { return LBRACE; }
   "}"                       { return RBRACE; }
   "("                       { return LPAREN; }
@@ -130,7 +128,7 @@ OCTAL_DIGITS=[0-7]+
   "<<"                      { return LSHIFT; }
   ">>"                      { return RSHIFT; }
   ">>>"                     { return URSHIFT; }
-  "="                       { return ASSING; }
+  "="                       { return ASSIGN; }
   "+="                      { return ADD_ASSIGN; }
   "-="                      { return MINUS_ASSIGN; }
   "*="                      { return MUL_ASSIGN; }
