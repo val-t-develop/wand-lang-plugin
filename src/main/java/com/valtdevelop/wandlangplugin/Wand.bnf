@@ -1,0 +1,471 @@
+/*  Based on Java Syntax Specification by Anders Møller [https://cs.au.dk/~amoeller/RegAut/JavaBNF.html] (BSD LICENSE, see https://www.brics.dk/automaton/)
+ *
+ */
+
+{
+    parserClass="com.valtdevelop.wandlangplugin.WandParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Wand"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.valtdevelop.wandlangplugin.psi"
+    psiImplPackage="com.valtdevelop.wandlangplugin.psi.impl"
+
+    elementTypeHolderClass="com.valtdevelop.wandlangplugin.psi.WandTypes"
+    elementTypeClass="com.valtdevelop.wandlangplugin.psi.WandElementType"
+    tokenTypeClass="com.valtdevelop.wandlangplugin.psi.WandTokenType"
+
+    tokens = [
+        PACKAGE           = 'package'
+        IMPORT            = 'import'
+        CLASS             = 'class'
+        INTERFACE         = 'interface'
+        EXTENDS           = 'extends'
+        IMPLEMENTS        = 'implements'
+        PUBLIC            = 'public'
+        PRIVATE           = 'private'
+        PROTECTED         = 'protected'
+        STATIC            = 'static'
+        ABSTRACT          = 'abstract'
+        FINAL             = 'final'
+        TRANSIENT         = 'transient'
+        VOLATILE          = 'volatile'
+        SYNCHRONIZED      = 'synchronized'
+        NATIVE            = 'native'
+
+        RETURN            = 'return'
+        GOTO              = 'goto'
+        IF                = 'if'
+        ELSE              = 'else'
+        WHILE             = 'while'
+        DO                = 'do'
+        FOR               = 'for'
+        SWITCH            = 'switch'
+        CASE              = 'case'
+        DEFAULT           = 'default'
+        BREAK             = 'break'
+        CONTINUE          = 'continue'
+        TRY               = 'try'
+        CATCH             = 'catch'
+        THROW             = 'throw'
+        THROWS            = 'throws'
+        FINALLY           = 'finally'
+
+        THIS              = 'this'
+        SUPER             = 'super'
+        NEW               = 'new'
+
+        CONST             = 'const'
+        VOID              = 'void'
+        CHAR              = 'char'
+        BOOL              = 'bool'
+        BYTE              = 'byte'
+        SHORT             = 'short'
+        INT               = 'int'
+        LONG              = 'long'
+        FLOAT             = 'float'
+        DOUBLE            = 'double'
+        INSTANCEOF        = 'instanceof'
+
+        TRUE              = 'true'
+        FALSE             = 'false'
+        NULL              = 'null'
+
+        LONG_SMALL_POST   = 'l'
+        LONG_BIG_POST     = 'L'
+        FLOAT_SMALL_POST  = 'f'
+        FLOAT_BIG_POST    = 'F'
+        DOUBLE_SMALL_POST = 'd'
+        DOUBLE_BIG_POST   = 'D'
+        EXP_SMALL         = 'e'
+        EXP_BIG           = 'E'
+        HEX_X_SMALL       = 'x'
+        HEX_X_BIG         = 'X'
+
+        LBRACE            = '{'
+        RBRACE            = '}'
+        LPAREN            = '('
+        RPAREN            = ')'
+        LBRACK            = '['
+        RBRACK            = ']'
+        SEMICOLON         = ';'
+        COLON             = ':'
+        QUESTION          = '?'
+        DOT               = '.'
+        COMMA             = ','
+        ADD               = '+'
+        MINUS             = '-'
+        MULT              = '*'
+        DIV               = '/'
+        MOD               = '%'
+        NOT               = '!'
+        AND               = '&&'
+        OR                = '||'
+        EQ                = '=='
+        NE                = '!='
+        LT                = '<'
+        GT                = '>'
+        LE                = '<='
+        GE                = '>='
+        BIN_NOT           = '~'
+        BIN_AND           = '&'
+        BIN_OR            = '|'
+        BIN_XOR           = '^'
+        LSHIFT            = '<<'
+        RSHIFT            = '>>'
+        URSHIFT           = '>>>'
+        ASSING            = '='
+        ADD_ASSIGN        = '+='
+        MINUS_ASSIGN      = '-='
+        MUL_ASSIGN        = '*='
+        DIV_ASSIGN        = '/='
+        MOD_ASSIGN        = '%='
+        BIN_AND_ASSIGN    = '&='
+        BIN_OR_ASSIGN     = '|='
+        BIN_XOR_ASSIGN    = '^='
+        LSHIFT_ASSIGN     = '<<='
+        RSHIFT_ASSIGN     = '>>='
+        URSHIFT_ASSIGN    = '>>>='
+        INC               = '++'
+        DEC               = '--'
+
+        space             = 'regexp:\s+'
+        line_comment      = 'regexp://.*'
+        block_comment     = 'regexp:/\*(.|\n)*\*/'
+        IDENTIFIER        = 'regexp:[a-zA-Z_][a-zA-Z_0-9]*'
+        STRING_LITERAL    = 'regexp:"([^"\\]*(\\.[^"\\]*)*)"'
+        CHAR_LITERAL      = "regexp:'([^'\\]|\\.)'"
+        DIGITS            = 'regexp:\d+'
+        OCTAL_DIGITS      = 'regexp:[0-7]+'
+        HEX_DIGITS        = '0[xX][0-9a-fA-F]+'
+      ]
+}
+root ::= package_declaration? import_declarations? type_declarations?
+
+package_declaration ::= 'package' package_name ';'
+
+import_declarations ::= import_declaration*
+
+import_declaration ::= single_type_import_declaration | type_import_on_demand_declaration
+
+single_type_import_declaration ::= 'import' type_name ';'
+
+type_import_on_demand_declaration ::= 'import' package_name '.' '*' ';'
+
+type_declarations ::= type_declaration*
+
+type_declaration ::= class_declaration | interface_declaration | ';'
+
+class_declaration ::= class_modifiers? 'class' IDENTIFIER extending? interfaces? class_body
+
+class_modifiers ::= class_modifier*
+
+class_modifier ::= 'public' | 'abstract' | 'final'
+
+extending ::= 'extends' class_type
+
+interfaces ::= 'implements' interface_type_list
+
+interface_type_list ::= interface_type (',' interface_type)*
+
+class_body ::= '{' class_body_declarations? '}'
+
+class_body_declarations ::= class_body_declaration*
+
+class_body_declaration ::= class_member_declaration | static_initializer | constructor_declaration | type_declaration
+
+class_member_declaration ::= field_declaration | method_declaration
+
+static_initializer ::= 'static' block
+
+constructor_declaration ::= constructor_modifiers? constructor_declarator throws_list? constructor_body
+
+constructor_modifiers ::= constructor_modifier*
+
+constructor_modifier ::= 'public' | 'protected' | 'private'
+
+constructor_declarator ::= simple_type_name '(' formal_parameter_list? ')'
+
+formal_parameter_list ::= formal_parameter (',' formal_parameter)*
+
+formal_parameter ::= type variable_declarator_id
+
+throws_list ::= 'throws' class_type_list
+
+class_type_list ::= class_type (',' class_type)*
+
+constructor_body ::= { explicit_constructor_invocation? block_statements? }
+
+explicit_constructor_invocation::= 'this' ( argument_list? ) | 'super' ( argument_list? )
+
+field_declaration ::= field_modifiers? type variable_declarators ';'
+
+field_modifiers ::= field_modifier*
+
+field_modifier ::= 'public' | 'protected' | 'private' | 'static' | 'final' | 'transient' | 'volatile'
+
+variable_declarators ::= variable_declarator (',' variable_declarator)*
+
+variable_declarator ::= variable_declarator_id | (variable_declarator_id '=' variable_initializer)
+
+variable_declarator_id ::= IDENTIFIER ('[' ']')*
+
+variable_initializer ::= expression | array_initializer
+
+method_declaration ::= method_header method_body
+
+method_header ::= method_modifiers? result_type method_declarator throws_list?
+
+result_type ::= type | 'void'
+
+method_modifiers ::= method_modifier*
+
+method_modifier ::= 'public' | 'protected' | 'private' | 'static' | 'abstract' | 'final' | 'synchronized' | 'native'
+
+method_declarator ::= IDENTIFIER '(' formal_parameter_list? ')'
+
+method_body ::= block | ';'
+
+interface_declaration ::= interface_modifiers? 'interface' IDENTIFIER extends_interfaces? interface_body
+
+interface_modifiers ::= interface_modifier*
+
+interface_modifier ::= 'public' | 'abstract'
+
+extends_interfaces ::= 'extends' interface_type (',' interface_type)*
+
+interface_body ::= { interface_member_declarations? }
+
+interface_member_declarations ::= interface_member_declaration*
+
+interface_member_declaration ::= constant_declaration | abstract_method_declaration
+
+constant_declaration ::= constant_modifiers type variable_declarator
+
+constant_modifiers ::= 'public' | 'static' | 'final'
+
+abstract_method_declaration::= abstract_method_modifiers? result_type method_declarator throws_list? ';'
+
+abstract_method_modifiers ::= abstract_method_modifier*
+
+abstract_method_modifier ::= 'public' | 'abstract'
+
+array_initializer ::= '{' variable_initializers? ',' ? '}'
+
+variable_initializers ::= variable_initializer (',' variable_initializer)*
+
+type ::= primitive_type | reference_type ('[' ']')*
+
+primitive_type ::= numeric_type | 'bool'
+
+numeric_type ::= integral_type | floating-point_type
+
+integral_type ::= 'byte' | 'short' | 'int' | 'long' | 'char'
+
+floating-point_type ::= 'float' | 'double'
+
+reference_type ::= class_or_interface_type
+
+class_or_interface_type ::= class_type | interface_type
+
+class_type ::= type_name
+
+interface_type ::= type_name
+
+block ::= '{' block_statements? '}'
+
+block_statements ::= block_statement*
+
+block_statement ::= local_variable_declaration_statement | statement
+
+local_variable_declaration_statement ::= local_variable_declaration ';'
+
+local_variable_declaration ::= type variable_declarators
+
+statement ::= statement_without_trailing_substatement | labeled_statement | if_then_statement | if_then_else_statement | while_statement | for_statement
+
+statement_no_short_if ::= statement_without_trailing_substatement | labeled_statement_no_short_if | if_then_else_statement_no_short_if | while_statement_no_short_if | for_statement_no_short_if
+
+statement_without_trailing_substatement ::= block | expression_statement | switch_statement | do_statement | break_statement | continue_statement | return_statement | synchronized_statement | throws_statement | try_statement
+
+labeled_statement ::= IDENTIFIER ':' statement
+
+labeled_statement_no_short_if ::= IDENTIFIER ':' statement_no_short_if
+
+expression_statement ::= statement_expression ';'
+
+statement_expression ::= assignment | postfix_expression | preincrement_expression | predecrement_expression | method_invocation | class_instance_creation_expression
+
+if_then_statement::= 'if' '(' expression ')' statement
+
+if_then_else_statement::= 'if' '(' expression ')' statement_no_short_if 'else' statement
+
+if_then_else_statement_no_short_if ::= 'if' '(' expression ')' statement_no_short_if 'else' statement_no_short_if
+
+switch_statement ::= 'switch' '(' expression ')' switch_block
+
+switch_block ::= '{' switch_block_statement_groups? switch_labels? '}'
+
+switch_block_statement_groups ::= switch_block_statement_group*
+
+switch_block_statement_group ::= switch_labels block_statements
+
+switch_labels ::= switch_label*
+
+switch_label ::= 'case' constant_expression ':' | 'default' ':'
+
+while_statement ::= 'while' ( expression ) statement
+
+while_statement_no_short_if ::= 'while' ( expression ) statement_no_short_if
+
+do_statement ::= 'do' statement 'while' ( expression ) ';'
+
+for_statement ::= 'for' '(' for_init? ';' expression? ';' for_update? ')' statement
+
+for_statement_no_short_if ::= 'for' '(' for_init? ';' expression? ';' for_update? ')' statement_no_short_if
+
+for_init ::= statement_expression_list | local_variable_declaration
+
+for_update ::= statement_expression_list
+
+statement_expression_list ::= statement_expression (',' statement_expression)*
+
+break_statement ::= 'break' IDENTIFIER? ';'
+
+continue_statement ::= 'continue' IDENTIFIER? ';'
+
+return_statement ::= 'return' expression? ';'
+
+throws_statement ::= 'throw' expression ';'
+
+synchronized_statement ::= 'synchronized' '(' expression ')' block
+
+try_statement ::= 'try' block catches | 'try' block catches? finally_block
+
+catches ::= catch_clause*
+
+catch_clause ::= 'catch' ( formal_parameter ) block
+
+finally_block ::= 'finally' block
+
+constant_expression ::= expression
+
+expression ::= assignment_expression
+
+assignment_expression ::= conditional_expression | assignment
+
+assignment ::= left_hand_side assignment_operator assignment_expression
+
+left_hand_side ::= primary//expression_name | field_access | array_access
+
+assignment_operator ::= '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '>>>=' | '&=' | '^=' | '|='
+
+conditional_expression ::= conditional_or_expression | conditional_or_expression '?' expression ':' conditional_expression
+
+conditional_or_expression ::= conditional_and_expression ('||' conditional_and_expression)*
+
+conditional_and_expression ::= inclusive_or_expression ('&&' inclusive_or_expression)*
+
+inclusive_or_expression ::= exclusive_or_expression ('|' exclusive_or_expression)*
+
+exclusive_or_expression ::= and_expression ('^' and_expression)*
+
+and_expression ::= equality_expression ('&' equality_expression)*
+
+equality_expression ::= relational_expression (('=='|'!=') relational_expression)*
+
+relational_expression ::= shift_expression ((('<'|'>'|'<='|'>=') shift_expression) | ('instanceof' reference_type))*
+
+shift_expression ::= additive_expression (('<<'|'>>'|'>>>') additive_expression)*
+
+additive_expression ::= multiplicative_expression (('+'|'-') multiplicative_expression)*
+
+multiplicative_expression ::= unary_expression (('*'|'/'|'%') unary_expression)*
+
+cast_expression ::= '(' primitive_type ')' unary_expression | '(' reference_type ')' unary_expression_not_plus_minus
+
+unary_expression ::= preincrement_expression | predecrement_expression | ('+' unary_expression) | ('-' unary_expression) | unary_expression_not_plus_minus
+
+predecrement_expression ::= '--' unary_expression
+
+preincrement_expression ::= '++' unary_expression
+
+unary_expression_not_plus_minus ::= postfix_expression | '~' unary_expression | '!' unary_expression | cast_expression
+
+postfix_expression ::= primary | expression_name ('++'|'--')?
+
+method_invocation ::= (method_name '(' argument_list? ')')
+    | (primary '.' IDENTIFIER '(' argument_list? ')')
+    | ('super' '.' IDENTIFIER '(' argument_list? ')')
+
+//field_access ::= primary '.' IDENTIFIER | 'super' '.' IDENTIFIER
+
+primary ::=
+    ( literal
+    | 'this'
+    | ('(' expression ')')
+    | class_instance_creation_expression
+    | ('super' '.' IDENTIFIER)
+    | (method_name '(' argument_list? ')')
+    | ('super' '.' IDENTIFIER '(' argument_list? ')')
+    | expression_name
+    | array_creation_expression)
+    (('[' expression ']') | ('.' IDENTIFIER) | ('.' IDENTIFIER '(' argument_list? ')'))*
+
+//primary_no_new_array ::= literal | 'this' | '(' expression ')' | class_instance_creation_expression | field_access | method_invocation | array_access
+
+class_instance_creation_expression ::= 'new' class_type '(' argument_list? ')'
+
+argument_list ::= expression (',' expression)*
+
+array_creation_expression ::= 'new' primitive_type dim_exprs dims? | 'new' class_or_interface_type dim_exprs dims?
+
+dim_exprs ::= dim_expr*
+
+dim_expr ::= '[' expression ']'
+
+dims ::= ('[' ']')*
+
+//array_access ::= expression_name '[' expression ']' | primary_no_new_array '[' expression ']'
+
+package_name ::= IDENTIFIER ('.' IDENTIFIER)*
+
+type_name ::= IDENTIFIER ('.' IDENTIFIER)*
+
+simple_type_name ::= IDENTIFIER
+
+expression_name ::= IDENTIFIER | ambiguous_name '.' IDENTIFIER
+
+method_name ::= IDENTIFIER | ambiguous_name '.' IDENTIFIER
+
+ambiguous_name::= IDENTIFIER ('.' IDENTIFIER)*
+
+literal ::= integer_literal | floating-point_literal | boolean_literal | CHAR_LITERAL | STRING_LITERAL | null_literal
+
+integer_literal ::= decimal_integer_literal | hex_integer_literal | octal_integer_literal
+
+decimal_integer_literal ::= DIGITS integer_type_suffix?
+
+hex_integer_literal ::= HEX_DIGITS integer_type_suffix?
+
+octal_integer_literal ::= OCTAL_DIGITS integer_type_suffix?
+
+integer_type_suffix ::= 'l' | 'L'
+
+floating-point_literal ::= (DIGITS '.' DIGITS? exponent_part? float_type_suffix?)
+    | (DIGITS exponent_part? float_type_suffix?)
+
+exponent_part ::= exponent_indicator signed_integer
+
+exponent_indicator ::= 'e' | 'E'
+
+signed_integer ::= sign? DIGITS
+
+sign ::= '+' | '-'
+
+float_type_suffix ::= 'f' | 'F' | 'd' | 'D'
+
+boolean_literal ::= 'true' | 'false'
+
+null_literal ::= 'null'
