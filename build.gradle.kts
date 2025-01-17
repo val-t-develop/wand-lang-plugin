@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.val-t-develop"
-version = "1.0-SNAPSHOT"
+version = "0.0.1a"
 
 repositories {
     mavenCentral()
