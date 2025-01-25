@@ -15,6 +15,10 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
+    implementation("net.java.dev.jna:jna:5.12.1")
+    implementation("net.java.dev.jna:jna-platform:5.12.1")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
     intellijPlatform {
         intellijIdeaCommunity("2024.3")
     }

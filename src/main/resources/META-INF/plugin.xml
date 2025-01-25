@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.val-t-develop.wand-lang-plugin</id>
+    <id>com.valtdevelop.wandlangplugin</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -36,5 +36,89 @@
                 implementationClass="com.valtdevelop.wandlangplugin.WandSyntaxHighlighterFactory"/>
         <colorSettingsPage
                 implementation="com.valtdevelop.wandlangplugin.WandColorSettingsPage"/>
+
+
+        <xdebugger.breakpointType
+                implementation="com.valtdevelop.wandlangplugin.debug.BreakpointType"/>
+        <xdebugger.breakpointType
+                implementation="com.valtdevelop.wandlangplugin.debug.WandCatchpointType"/>
+        <xdebugger.breakpointType
+                implementation="com.valtdevelop.wandlangplugin.debug.ShlibCatchpointType"/>
+        <xdebugger.breakpointType
+                implementation="com.valtdevelop.wandlangplugin.debug.WatchpointType"/>
+        <xdebugger.attachDebuggerProvider
+                implementation="com.valtdevelop.wandlangplugin.debug.AttachDebuggerProvider"/>
+        <xdebugger.attachHostProvider implementation="com.valtdevelop.wandlangplugin.debug.AttachHostProvider">
+        </xdebugger.attachHostProvider>
+
+        <!-- TODO xdebugger.localAttachDebuggerProvider implementation="" -->
+        <programRunner implementation="com.valtdevelop.wandlangplugin.debug.Runner"/>
+        <configurationType implementation="com.valtdevelop.wandlangplugin.debug.ConfigurationType"/>
+
+        <projectConfigurable
+                groupId="build"
+                id="build.native2debugger"
+                groupWeight="119"
+                instance="com.valtdevelop.wandlangplugin.debug.ProjectSettingsConfigurable"
+                displayName="Native2 Debugger"
+        />
+        <applicationService
+                serviceImplementation="com.valtdevelop.wandlangplugin.debug.ProjectSettingsState"/>
+
     </extensions>
+
+
+    <resource-bundle>messages.WandDebuggerBundle</resource-bundle>
+    <actions>
+        <action id="com.valtdevelop.wandlangplugin.debug.ReturnAction"
+                class="com.valtdevelop.wandlangplugin.debug.ReturnAction"
+                text="Return Immediately" description="Return from this function immediately">
+            <add-to-group group-id="DebuggingActionsGroup" anchor="last"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar" relative-to-action="StepOut" anchor="after"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar3" relative-to-action="StepOut" anchor="after"/>
+
+            <keyboard-shortcut keymap="$default" first-keystroke="shift F7"/>
+        </action>
+        <action id="com.valtdevelop.wandlangplugin.debug.ReverseResumeAction"
+                class="com.valtdevelop.wandlangplugin.debug.ReverseResumeAction"
+                text="Reverse Resume" description="Resume in the reverse direction">
+            <add-to-group group-id="DebuggingActionsGroup" anchor="last"/>
+            <add-to-group group-id="XDebugger.ToolWindow.LeftToolbar" relative-to-action="Resume" anchor="after"/>
+
+            <keyboard-shortcut keymap="$default" first-keystroke="shift F8"/>
+        </action>
+        <action id="com.valtdevelop.wandlangplugin.debug.ReverseStepOutAction"
+                class="com.valtdevelop.wandlangplugin.debug.ReverseStepOutAction"
+                text="Reverse Step Out" description="Step out in the reverse direction">
+            <add-to-group group-id="DebuggingActionsGroup" anchor="last"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar" relative-to-action="StepOut" anchor="after"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar3" relative-to-action="StepOut" anchor="after"/>
+
+            <keyboard-shortcut keymap="$default" first-keystroke="shift F7"/>
+        </action>
+        <action id="com.valtdevelop.wandlangplugin.debug.ReverseStepIntoAction"
+                class="com.valtdevelop.wandlangplugin.debug.ReverseStepIntoAction"
+                text="Reverse Step Into" description="Step into in the reverse direction">
+            <add-to-group group-id="DebuggingActionsGroup" anchor="last"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar" relative-to-action="StepInto" anchor="after"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar3" relative-to-action="StepInto" anchor="after"/>
+
+            <keyboard-shortcut keymap="$default" first-keystroke="shift F5"/>
+        </action>
+        <action id="com.valtdevelop.wandlangplugin.debug.ReverseStepOverAction"
+                class="com.valtdevelop.wandlangplugin.debug.ReverseStepOverAction"
+                text="Reverse Step Over" description="Step over in the reverse direction">
+            <add-to-group group-id="DebuggingActionsGroup" anchor="last"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar" relative-to-action="StepOver" anchor="after"/>
+            <add-to-group group-id="XDebugger.ToolWindow.TopToolbar3" relative-to-action="StepOver" anchor="after"/>
+
+            <keyboard-shortcut keymap="$default" first-keystroke="shift F6"/>
+        </action>
+        <action id="com.valtdevelop.wandlangplugin.debug.ShowVariableInMemoryViewAction"
+                class="com.valtdevelop.wandlangplugin.debug.ShowVariableInMemoryViewAction"
+                text="Show in Memory View" description="Show the contents of this variable in the Memory View">
+            <add-to-group group-id="XDebugger.ValueGroup" anchor="after"
+                          relative-to-action="Debugger.ShowReferring"/>
+        </action>
+    </actions>
 </idea-plugin>
