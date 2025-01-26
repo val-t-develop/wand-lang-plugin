@@ -1,6 +1,7 @@
-/*  Based on Java Syntax Specification by Anders Møller [https://cs.au.dk/~amoeller/RegAut/JavaBNF.html] (BSD LICENSE, see https://www.brics.dk/automaton/)
- *
- */
+// Copyright 2025 Valentyn Tymchyshyn, Anders Møller
+// BSD-3-Clause license
+
+//  Based on Java Syntax Specification by Anders Møller [https://cs.au.dk/~amoeller/RegAut/JavaBNF.html] (BSD LICENSE, see https://www.brics.dk/automaton/)
 
 {
     parserClass="com.valtdevelop.wandlangplugin.WandParser"
